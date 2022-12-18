@@ -33,7 +33,7 @@ async def request_handler(raw_request: str) -> Response:
 
 
 async def server_flow(reader, writer):
-    raw_request = (await reader.read(5000)).decode('utf8')
+    raw_request = (await reader.read(1024)).decode('utf8')
     if raw_request:
         response = await request_handler(raw_request)
         response.send(writer=writer)
@@ -46,7 +46,8 @@ async def run_server():
         await server.serve_forever()
 
 
-loop = asyncio.get_event_loop()
-loop.create_task(run_server())
-loop.create_task(delete_tasks())
-loop.run_forever()
+if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    loop.create_task(run_server())
+    loop.create_task(delete_tasks())
+    loop.run_forever()

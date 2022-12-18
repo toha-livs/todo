@@ -26,7 +26,9 @@ function DetailTask() {
   const updateTask = () => {
     if (taskName !== "") {
       axiosBaseURL.put(`/tasks/${taskId}/`, JSON.stringify({'name': taskName}))
-        .then(res => {}).catch(err => {
+        .then(res => {
+            navigate('/')
+        }).catch(err => {
         console.log('updateTask Error', err)
         navigate('/')
       })
