@@ -20,7 +20,7 @@ class Response:
 
 def make_response(http_version, path, body: str, status: Optional[HTTPStatus] = HTTPStatus.OK) -> Response:
     body_len = len(body)
-    first_line = f'{http_version} {path} {status.value} {status.phrase}'.encode() + b'\r\n'
+    first_line = f'{http_version} {status.value} {status.phrase}'.encode() + b'\r\n'
     headers = (
         b'Content-Type: application/json\r\n'
         b'Accept: application/json; encoding=utf8\r\n'
