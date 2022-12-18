@@ -1,10 +1,12 @@
+from http import HTTPStatus
+
 from exceptions import BadRequestError, NotFoundRequestError
 from db import get_connection
 from request import Request
 
 
 async def not_found_view(request):
-    return {}, 'Page not found', 404
+    return {}, 'Page not found', HTTPStatus.NOT_FOUND
 
 
 async def tasks_view(request: Request):
@@ -21,7 +23,7 @@ async def tasks_view(request: Request):
                     RETURNING id""", name)
             data = {'id': result, 'name': name}
     data = {'data': data}
-    return data, 'success', 200
+    return data, 'success', HTTPStatus.OK
 
 
 async def detail_task_view(request: Request):
@@ -45,4 +47,4 @@ async def detail_task_view(request: Request):
             await conn.execute(f'delete from tasks where id = {task_id};')
 
     data = {'data': data}
-    return data, 'success', 200
+    return data, 'success', HTTPStatus.OK

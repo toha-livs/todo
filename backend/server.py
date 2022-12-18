@@ -11,7 +11,7 @@ from tasks import delete_tasks
 
 async def request_handler(raw_request: str):
     request = Request(raw_request)
-    data, message, code = {}, 'Page not found', HTTPStatus.NOT_FOUND.value
+    data, message, code = {}, 'Page not found', HTTPStatus.NOT_FOUND
     if 'tasks/' in request.path:
         url_path = request.path[request.path.find('tasks'):]
         if url_path.endswith('tasks/'):
@@ -26,9 +26,9 @@ async def request_handler(raw_request: str):
             message, code = ex.message, ex.code
         except Exception:
             # print(traceback.format_exc())
-            message, code = 'Something went wrong', HTTPStatus.INTERNAL_SERVER_ERROR.value
+            message, code = 'Something went wrong', HTTPStatus.INTERNAL_SERVER_ERROR
     data['message'] = message
-    res = make_response(path=request.path, body=json.dumps(data), status_code=code)
+    res = make_response(path=request.path, body=json.dumps(data), status=code)
     return res
 
 
