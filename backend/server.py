@@ -3,13 +3,13 @@ import json
 
 from exceptions import BaseRequestError
 from request import Request
-from utils import make_response
+from utils import make_response, Response
 from views import tasks_view, detail_task_view, not_found_view
 from http import HTTPStatus
 from tasks import delete_tasks
 
 
-async def request_handler(raw_request: str):
+async def request_handler(raw_request: str) -> Response:
     request = Request(raw_request)
     data, message, code = {}, 'Page not found', HTTPStatus.NOT_FOUND
     if 'tasks/' in request.path:
@@ -36,7 +36,7 @@ async def server_flow(reader, writer):
     raw_request = (await reader.read(5000)).decode('utf8')
     if raw_request:
         response = await request_handler(raw_request)
-        writer.write(response.encode())
+        response.send(writer=writer)
         writer.close()
 
 
