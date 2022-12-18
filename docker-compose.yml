@@ -25,7 +25,8 @@ services:
       - ./frontend:/app/frontend
 
     environment:
-      - host=${SERVER_HOST}
+      - SERVER_HOST=${SERVER_HOST}
+      - SERVER_SECURE=${SERVER_SECURE}
 
     depends_on:
       - backend
