@@ -1,15 +1,11 @@
 import Axios from 'axios';
 
 const getBaseUrl = () => {
-  let url = 'localhost:8000'
-  let schema = 'http'
-  if (process.env.SERVER_HOST) {
-    url = process.env.SERVER_HOST
+  let url = 'http://localhost:8000'
+  if (process.env.NODE_ENV == 'production') {
+    url = 'https://3.75.136.149/api'
   }
-  if (process.env.SERVER_SECURE) {
-      schema = 'https'
-  }
-  return schema +  '://' + url
+  return url
 }
 
 const axiosBaseURL = Axios.create({
