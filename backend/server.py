@@ -1,6 +1,5 @@
 import asyncio
 import json
-import traceback
 
 from exceptions import BaseRequestError
 from request import Request
@@ -23,10 +22,9 @@ async def request_handler(raw_request: str):
         try:
             data, message, code = await view(request)
         except BaseRequestError as ex:
-            print('Bad request')
             message, code = ex.message, ex.code
         except Exception:
-            print(traceback.format_exc())
+            # print(traceback.format_exc())
             message, code = 'Something went wrong', HTTPStatus.INTERNAL_SERVER_ERROR.value
     data['message'] = message
     res = make_response(path=request.path, body=json.dumps(data), status_code=code)
@@ -43,7 +41,6 @@ async def server_flow(reader, writer):
 
 async def run_server():
     server = await asyncio.start_server(server_flow, '0.0.0.0', 8000)
-    print(type(server))
     async with server:
         await server.serve_forever()
 
@@ -52,4 +49,3 @@ loop = asyncio.get_event_loop()
 loop.create_task(run_server())
 loop.create_task(delete_tasks())
 loop.run_forever()
-# asyncio.run(run_server())
