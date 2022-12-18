@@ -13,7 +13,7 @@ async def request_handler(raw_request: str):
     request = Request(raw_request)
     data, message, code = {}, 'Page not found', HTTPStatus.NOT_FOUND
     if 'tasks/' in request.path:
-        url_path = request.path[request.path.find('tasks'):]
+        url_path = request.path[request.path.find('/tasks'):]
         if url_path.endswith('tasks/'):
             view = tasks_view
         elif url_path.count('/') == 3:
