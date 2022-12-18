@@ -24,10 +24,6 @@ services:
     volumes:
       - ./frontend:/app/frontend
 
-    environment:
-      - SERVER_HOST=${SERVER_HOST}
-      - SERVER_SECURE=${SERVER_SECURE}
-
     depends_on:
       - backend
 
