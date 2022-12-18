@@ -7,12 +7,13 @@ from exceptions import BadRequestError
 class Request:
     host: str = None
     method: str = None
+    http_version: str = None
     path: str = None
     body: Union[str, dict] = ''
 
     def __init__(self, raw_http: str):
         first_line = raw_http[:raw_http.find('\r\n')]
-        self.method, self.path, _ = first_line.split()
+        self.method, self.path, self.http_version = first_line.split()
         if self.method in ["POST", "PUT"]:
             body = raw_http[raw_http.find('\r\n\r\n') + 4:]
             self.body = body

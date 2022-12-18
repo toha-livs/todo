@@ -17,9 +17,9 @@ class Response:
         writer.write(self.body)
 
 
-def make_response(path, body: str, status: Optional[HTTPStatus] = HTTPStatus.OK) -> Response:
+def make_response(http_version, path, body: str, status: Optional[HTTPStatus] = HTTPStatus.OK) -> Response:
     body_len = len(body)
-    first_line = f'HTTP/1.1 {path} {status.value} {status.phrase}'.encode() + b'\n'
+    first_line = f'{http_version} {path} {status.value} {status.phrase}'.encode() + b'\n'
     headers = (
         b'Content-Type: application/json\n'
         b'Accept: application/json; encoding=utf8\n'

@@ -28,7 +28,7 @@ async def request_handler(raw_request: str) -> Response:
             # print(traceback.format_exc())
             message, code = 'Something went wrong', HTTPStatus.INTERNAL_SERVER_ERROR
     data['message'] = message
-    res = make_response(path=request.path, body=json.dumps(data), status=code)
+    res = make_response(http_version=request.http_version, path=request.path, body=json.dumps(data), status=code)
     return res
 
 
