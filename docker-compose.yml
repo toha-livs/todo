@@ -24,6 +24,9 @@ services:
     volumes:
       - ./frontend:/app/frontend
 
+    environment:
+      - host=${SERVER_HOST}
+
     depends_on:
       - backend
 

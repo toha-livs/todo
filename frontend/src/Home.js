@@ -1,30 +1,38 @@
 import { useState, useEffect } from 'react'
-import Task from './components/Task'
-import Alert from 'react-bootstrap/Alert'
+import { Link } from "react-router-dom";
+import Task from './components/Task';
+import Alert from 'react-bootstrap/Alert';
 
-import axios from 'axios';
+import axiosBaseURL from './httpCommon';
 
 
 function Home() {
  const [tasks, setTasks] = useState([])
  const [taskName, setTaskName] = useState("")
 
- useEffect(() => {
-    axios.get('http://localhost:15555/api/tasks/')
+ const updateTasks = () => {
+ 		axiosBaseURL.get('/tasks/')
       .then(res => {
         setTasks(res.data.data)
-      })
+      }).catch(err => {
+    	console.log('updateTasks Error', err)
+    })
+ }
+
+ useEffect(() => {
+    updateTasks()
   }, []);
 
  const addTask = () => {
     if (taskName !== "") {
 
-    	axios.post('http://localhost:15555/api/tasks/', JSON.stringify({'name': taskName}))
+    	axiosBaseURL.post('/tasks/', JSON.stringify({'name': taskName}))
 	      .then(res => {
-	      	console.log(res.data)
 	      	setTasks([...tasks, res.data.data]);
 	      	setTaskName("");
-	      })
+	      }).catch(err => {
+    	console.log('addTask Error', err)
+    })
     }
   };
 
@@ -57,7 +65,7 @@ function Home() {
 					                <th>Удаление</th>
 					            </tr>
 					            {tasks.length > 0 &&
-					                tasks.map(task => <Task key={task.id} task={task} />)
+					                tasks.map(task => <Task key={task.id} task={task} setTasks={setTasks} tasks={tasks}/>)
 					            }
 					        </tbody>
 

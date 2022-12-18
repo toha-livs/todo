@@ -1,5 +1,3 @@
-
-
 import Home from './Home'
 import DetailTask from './DetailTask'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -11,7 +9,7 @@ import { BrowserRouter as Router, Route, Link, Routes, useParams } from "react-r
 export default function App() {
 
  let { taskId } = useParams();
- 
+
  return (
     <Router>
     <Routes>

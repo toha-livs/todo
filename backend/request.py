@@ -1,6 +1,8 @@
 import json
 from typing import Union
 
+from exceptions import BadRequestError
+
 
 class Request:
     host: str = None
@@ -17,7 +19,11 @@ class Request:
 
     @property
     def json(self):
-        return json.loads(self.body)
+        try:
+            result = json.loads(self.body)
+        except json.JSONDecodeError:
+            raise BadRequestError()
+        return result
 
     def __str__(self):
         return f'<Request: {self.method}, path=({self.path})> (body_length:{len(self.body)})'

@@ -5,6 +5,7 @@ Content-Type: application/json"
 Accept: application/json
 Connection: close
 Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: *
 Content-Length: {body_len}
 
 {body}
